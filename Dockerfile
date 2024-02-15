@@ -18,7 +18,7 @@ RUN yum update -y && \
 RUN npm install -g npm@latest
 
 # Install Yarn and update the PATH
-RUN npm install -g yarn --verbose && \
+RUN npm install -g yarn && \
     echo "export PATH=$(npm config get prefix)/bin:$PATH" >> $HOME/.bashrc && \
     source $HOME/.bashrc
 
@@ -31,7 +31,8 @@ RUN wget https://github.com/backstage/backstage/archive/refs/tags/${BACKSTAGE_VE
     rm backstage.tar.gz
 
 # Install Backstage dependencies using yarn
-RUN NPM_CONFIG_VERBOSE=true NPM_CONFIG_LOGLEVEL=verbose yarn install
+#RUN NPM_CONFIG_VERBOSE=true NPM_CONFIG_LOGLEVEL=verbose yarn install
+RUN yarn install
 
 # Add Backstage plugins
 RUN yarn add @backstage/plugin-bitbucket-cloud @backstage/plugin-ldap @backstage/plugin-jenkins @backstage/plugin-jira @backstage/plugin-catalog-backend-module-bitbucket-server
