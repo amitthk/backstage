@@ -31,7 +31,7 @@ RUN wget https://github.com/backstage/backstage/archive/refs/tags/${BACKSTAGE_VE
     rm backstage.tar.gz
 
 # Install Backstage dependencies using yarn
-RUN yarn install --verbose
+RUN NPM_CONFIG_VERBOSE=true NPM_CONFIG_LOGLEVEL=verbose yarn install
 
 # Add Backstage plugins
 RUN yarn add @backstage/plugin-bitbucket-cloud @backstage/plugin-ldap @backstage/plugin-jenkins @backstage/plugin-jira @backstage/plugin-catalog-backend-module-bitbucket-server
@@ -45,4 +45,4 @@ RUN yarn build
 EXPOSE 3000
 
 # Start Backstage
-CMD ["yarn", "start"]
+CMD ["yarn", "dev","--verbose"]
