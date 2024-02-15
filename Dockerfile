@@ -14,8 +14,13 @@ RUN yum update -y && \
     yum install -y nodejs java-21-openjdk-devel python39 && \
     yum clean all
 
-# Install Yarn
-RUN npm install -g yarn --verbose
+# Update npm to the latest stable version
+RUN npm install -g npm@latest
+
+# Install Yarn and update the PATH
+RUN npm install -g yarn --verbose && \
+    echo "export PATH=$(npm config get prefix)/bin:$PATH" >> $HOME/.bashrc && \
+    source $HOME/.bashrc
 
 # Set the working directory for Backstage
 WORKDIR /opt/backstage
@@ -40,4 +45,4 @@ RUN yarn build
 EXPOSE 3000
 
 # Start Backstage
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
